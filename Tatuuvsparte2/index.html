@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distribuidora Luna | Inicio</title>
+
+  
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="icon" href="./img/logoL.jpeg" type="image/png" />
+</head>
+
+<body>
+  <header class="main-header">
+    <div class="header-flex">
+      <div class="logo">
+        <a href="index.html">
+          <img src="./img/logoL.jpeg" alt="Distribuidora Luna" />
+        </a>
+      </div>
+
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="activo">Inicio</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="carrito.html">Carrito</a></li>
+          <li>
+            <a href="https://maps.app.goo.gl/uBxiRL9WErmYsEJV6?g_st=it" target="_blank">
+              Ubicación 📍
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <a href="carrito.html" class="btn-carrito">
+        🛒 Carrito <span id="carritoCantidad">(0)</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="inicio">
+    <img class="logo-animado" src="./img/logoprincipal.jpeg" alt="Logo" />
+    <h1>¡Bienvenidos a Distribuidora Luna!</h1>
+    <p>
+      Somos una distribuidora mayorista de golosinas, bebidas, galletitas y más,
+      llevando productos de calidad a tu negocio 💼
+    </p>
+
+    <div class="botones">
+      <a href="productos.html" class="btn-1">Ver Productos</a>
+      <a
+        href="https://wa.me/543549528413?text=Hola!%20Quiero%20hacer%20un%20pedido%20a%20Distribuidora%20Luna"
+        target="_blank"
+        class="btn-2"
+        >📲 Confirmar por WhatsApp</a
+      >
+    </div>
+  </section>
+
+  <section class="marcas-section">
+    <h2>Acerca de Nosotros</h2>
+    <p style="max-width: 700px; margin: 0 auto; font-size: 1rem;">
+      En <strong>Distribuidora Luna</strong> trabajamos para que los comercios de
+      la región cuenten con los mejores productos a precios accesibles. Nos
+      destacamos por la atención cercana, la rapidez en los pedidos y el
+      compromiso con nuestros clientes. ¡Estamos donde vos estás!
+    </p>
+  </section>
+
+  <section class="zonas-entrega-section">
+    <h2>🚚 Zonas de Entrega</h2>
+    <div class="zonas-entrega-contenido">
+      <div class="zonas-entrega-lista">
+        <ul>
+          <li>📍 <strong>Cruz del Eje:</strong> Miércoles y Sábados</li>
+          <li>📍 <strong>Villa de Soto:</strong> Martes y Viernes</li>
+          <li>📍 <strong>Salsacate:</strong> Martes</li>
+          <li>📍 <strong>Taninga:</strong> Martes</li>
+          <li>📍 <strong>Serrezuela:</strong> Sábados</li>
+          <li>📍 <strong>Tulumba:</strong> Sábados</li>
+          <li>📍 <strong>Paso Viejo:</strong> Sábados</li>
+        </ul>
+      </div>
+
+      <div class="zonas-entrega-mapa">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3412.9472370792083!2d-64.52763278532947!3d-30.859462281634344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432701a8e214c8f%3A0x94d3585cfb30162d!2sVilla%20de%20Soto%2C%20C%C3%B3rdoba!5e0!3m2!1ses-419!2sar!4v1698247762732!5m2!1ses-419!2sar"
+          width="100%"
+          height="260"
+          style="border:0; border-radius: 12px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="marcas-section">
+    <h2>Nuestras Marcas</h2>
+    <div class="marcas">
+      <img src="./img/descarga4.jpg" alt="Menthoplus" />
+      <img src="./img/descarga3.jpg" alt="Merengadas" />
+      <img src="./img/descarga2.png" alt="Baggio" />
+      <img src="./img/descarga (1).png" alt="Arcor" />
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Distribuidora Luna — Libertad 861, Villa de Soto | 📞 +54 3549 528413</p>
+  </footer>
+
+  
+  <script src="./assets/js/script.js"></script>
+
+  <script>
+    function actualizarContadorCarrito() {
+      const contador = document.getElementById("carritoCantidad");
+      if (!contador) return;
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+      contador.textContent = `(${totalItems})`;
+    }
+    actualizarContadorCarrito();
+  </script>
+</body>
+</html>

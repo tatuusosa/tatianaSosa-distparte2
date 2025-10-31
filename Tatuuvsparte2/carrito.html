@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras | Distribuidora Luna</title>
+
+  <!-- ✅ Ruta corregida del CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- ✅ Ruta corregida del ícono -->
+  <link rel="icon" type="image/png" href="img/logoL.jpeg">
+
+  <!-- Librería para generar PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+  <header class="main-header">
+    <div class="header-flex">
+      <div class="logo">
+        <!-- ✅ Ruta corregida del logo -->
+        <a href="index.html"><img src="img/logoL.jpeg" alt="Distribuidora Luna"></a>
+      </div>
+
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="carrito.html" class="activo">Carrito</a></li>
+          <li><a href="https://maps.app.goo.gl/uBxiRL9WErmYsEJV6" target="_blank">Ubicación 📍</a></li>
+        </ul>
+      </nav>
+
+      <a href="carrito.html" class="btn-carrito">🛒 Carrito <span id="carritoCantidad">(0)</span></a>
+    </div>
+  </header>
+
+
+  <main class="catalogo">
+    <h2>🛒 Tu Carrito</h2>
+
+    <table id="tablaCarrito" class="carrito-tabla" style="margin-top: 2rem; width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="carrito-total" style="margin-top: 1.5rem;">
+      <h3>Total: $<span id="total">0</span></h3>
+    </div>
+
+    <div class="carrito-botones" style="margin-top: 2rem;">
+      <button id="vaciarCarrito" class="btn-2">🗑️ Vaciar Carrito</button>
+      <button id="generarFactura" class="btn-1">📄 Descargar Factura</button>
+      <a href="https://wa.me/543549528413?text=Hola!%20Quisiera%20confirmar%20mi%20pedido%20en%20Distribuidora%20Luna."
+         target="_blank" class="btn-1">📲 Confirmar por WhatsApp</a>
+    </div>
+  </main>
+
+
+  <footer class="footer">
+    <p>© 2025 Distribuidora Luna — Libertad 861, Villa de Soto | 📞 +54 3549 528413</p>
+  </footer>
+
+  <!-- ✅ Ruta correcta del script global -->
+  <script src="assets/js/script.js"></script>
+
+  <!-- Script del carrito (mantiene la tabla, totales y factura) -->
+  <script>
+    const tablaCarrito = document.querySelector("#tablaCarrito tbody");
+    const totalCarrito = document.querySelector("#total");
+    const vaciarBtn = document.querySelector("#vaciarCarrito");
+    const facturaBtn = document.querySelector("#generarFactura");
+
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function actualizarContadorCarrito() {
+      const contador = document.getElementById("carritoCantidad");
+      const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+      contador.textContent = `(${totalItems})`;
+    }
+
+    function mostrarCarrito() {
+      tablaCarrito.innerHTML = "";
+      let total = 0;
+
+      carrito.forEach((producto, index) => {
+        const subtotal = producto.precio * producto.cantidad;
+        total += subtotal;
+
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+          <td>${producto.titulo}</td>
+          <td>$${producto.precio}</td>
+          <td>
+            <button onclick="cambiarCantidad(${index}, -1)" class="cantidad-btn">-</button>
+            ${producto.cantidad}
+            <button onclick="cambiarCantidad(${index}, 1)" class="cantidad-btn">+</button>
+          </td>
+          <td>$${subtotal.toFixed(2)}</td>
+          <td><button onclick="eliminarProducto(${index})" class="eliminar-btn">❌</button></td>
+        `;
+        tablaCarrito.appendChild(fila);
+      });
+
+      totalCarrito.textContent = total.toFixed(2);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      actualizarContadorCarrito();
+    }
+
+    function cambiarCantidad(index, cambio) {
+      carrito[index].cantidad += cambio;
+      if (carrito[index].cantidad < 1) carrito[index].cantidad = 1;
+      mostrarCarrito();
+    }
+
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      mostrarCarrito();
+    }
+
+    vaciarBtn.addEventListener("click", () => {
+      carrito = [];
+      mostrarCarrito();
+    });
+
+    facturaBtn.addEventListener("click", () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // ✅ Ruta del logo ajustada
+      const logo = new Image();
+      logo.src = "img/logoL.jpeg";
+
+      logo.onload = () => {
+        doc.addImage(logo, "JPEG", 150, 10, 40, 20);
+        generarPDF();
+      };
+
+      function generarPDF() {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("Distribuidora Luna", 20, 20);
+        doc.setFontSize(11);
+        doc.text("Libertad 861 - Villa de Soto, Córdoba", 20, 28);
+        doc.text("Tel: +54 3549 528413", 20, 34);
+        doc.setFontSize(13);
+        doc.text("Factura de pedido", 20, 44);
+        doc.line(20, 46, 190, 46);
+
+        let y = 60;
+        carrito.forEach(p => {
+          doc.setFontSize(11);
+          doc.text(`${p.titulo} | Cantidad: ${p.cantidad} | Subtotal: $${(p.precio * p.cantidad).toFixed(2)}`, 20, y);
+          y += 8;
+        });
+
+        doc.line(20, y + 2, 190, y + 2);
+        doc.setFontSize(13);
+        doc.text(`TOTAL: $${totalCarrito.textContent}`, 20, y + 12);
+        doc.setFontSize(11);
+        doc.text("Gracias por tu compra 💙", 20, y + 25);
+
+        doc.save("Factura_Distribuidora_Luna.pdf");
+      }
+    });
+
+    // Inicial
+    mostrarCarrito();
+  </script>
+</body>
+</html>

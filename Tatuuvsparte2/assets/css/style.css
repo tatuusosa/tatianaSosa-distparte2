@@ -1,0 +1,386 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-primario: #0939d1;
+  --color-secundario: #243362;
+  --color-acento: #c61c39;
+  --color-azul-claro: #5a7df2;
+  --color-negro: #000000;
+  --color-blanco: #ffffff;
+  --gris-fondo: #f7f8fc;
+  --gris-texto: #555;
+  --sombra: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--gris-fondo);
+  color: var(--gris-texto);
+  line-height: 1.6;
+}
+
+
+
+.main-header {
+  background: var(--color-blanco);
+  box-shadow: 0 2px 8px var(--sombra);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+}
+
+.logo img {
+  height: 45px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--color-primario);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.activo {
+  color: var(--color-azul-claro);
+  font-weight: 600;
+}
+
+.btn-carrito {
+  background: var(--color-primario);
+  color: var(--color-blanco);
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn-carrito:hover {
+  background: var(--color-azul-claro);
+}
+
+
+.inicio {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.inicio h1 {
+  font-size: 2rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+}
+
+.inicio p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.inicio img {
+  max-width: 160px;
+  margin-bottom: 1.5rem;
+}
+
+
+.logo-animado {
+  opacity: 0;
+  transform: scale(0.95) translateY(15px);
+  animation: aparecerLogo 0.8s ease-out forwards;
+}
+
+@keyframes aparecerLogo {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.inicio .botones {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-1, .btn-2 {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.btn-1 {
+  background: var(--color-primario);
+  color: white;
+}
+
+.btn-1:hover {
+  background: var(--color-azul-claro);
+}
+
+.btn-2 {
+  background: white;
+  color: var(--color-primario);
+  border: 2px solid var(--color-primario);
+}
+
+.btn-2:hover {
+  background: var(--color-primario);
+  color: white;
+}
+
+
+
+.marcas-section {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.marcas-section h2 {
+  font-size: 2rem;
+  color: var(--color-acento);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.marcas-section h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--color-acento);
+  margin: 10px auto 0;
+  border-radius: 3px;
+}
+
+.marcas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.marcas img {
+  max-width: 160px;
+  height: auto;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+}
+
+.marcas img:hover {
+  transform: scale(1.1);
+}
+
+
+.catalogo {
+  padding: 4rem 3rem;
+  text-align: center;
+}
+
+.catalogo h2 {
+  color: var(--color-primario);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.catalogo p {
+  font-size: 1rem;
+  color: var(--gris-texto);
+  margin-bottom: 2rem;
+}
+
+.buscador {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.buscador input {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 300px;
+}
+
+.btn-outline {
+  border: 2px solid var(--color-primario);
+  color: var(--color-primario);
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-outline:hover {
+  background: var(--color-primario);
+  color: var(--color-blanco);
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.producto {
+  background: var(--color-blanco);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--sombra);
+  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(9, 57, 209, 0.2);
+}
+
+.producto img {
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.producto h3 {
+  font-size: 1.1rem;
+  color: var(--color-primario);
+  margin: 10px 0 5px;
+}
+
+.descripcion {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.precio {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-azul-claro);
+  margin-bottom: 10px;
+}
+
+.btn-agregar {
+  background: var(--color-primario);
+  color: var(--color-blanco);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-agregar:hover {
+  background: var(--color-azul-claro);
+}
+
+
+
+.mensaje-agregado {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--color-primario);
+  color: var(--color-blanco);
+  padding: 12px 18px;
+  border-radius: 8px;
+  display: none;
+  box-shadow: 0 4px 10px var(--sombra);
+  animation: fadeIn 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+.zonas-entrega-section {
+  background-color: var(--color-secundario);
+  color: white;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.zonas-entrega-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.zonas-entrega-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.zonas-entrega-lista ul {
+  list-style: none;
+  font-size: 1rem;
+  line-height: 2;
+  padding: 0;
+  text-align: left;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+.zonas-entrega-mapa iframe {
+  width: 100%;
+  max-width: 500px;
+  height: 260px;
+  border-radius: 12px;
+}
+
+
+
+.footer {
+  background: var(--color-primario);
+  color: var(--color-blanco);
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 4rem;
+  font-size: 0.9rem;
+}

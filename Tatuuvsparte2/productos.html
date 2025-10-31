@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos | Distribuidora Luna</title>
+
+
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="icon" type="image/png" href="./img/logoL.jpeg" />
+</head>
+
+<body>
+
+  <header class="main-header">
+    <div class="header-flex">
+      <div class="logo">
+        <a href="index.html"><img src="./img/logoL.jpeg" alt="Distribuidora Luna"></a>
+      </div>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="productos.html" class="activo">Productos</a></li>
+          <li><a href="carrito.html">Carrito</a></li>
+          <li><a href="https://maps.app.goo.gl/uBxiRL9WErmYsEJV6" target="_blank">Ubicación 📍</a></li>
+        </ul>
+      </nav>
+      <a href="carrito.html" class="btn-carrito">🛒 Carrito <span id="carritoCantidad">(0)</span></a>
+    </div>
+  </header>
+
+
+  <section class="catalogo">
+    <h2>Lista de Productos</h2>
+    <p>Buscá lo que necesites o pedí la lista mayorista por WhatsApp 📱</p>
+
+    <div class="buscador">
+      <input type="text" id="buscador" placeholder="🔍 Buscar producto..." />
+      <a href="https://wa.me/543549528413?text=Hola!%20Quisiera%20recibir%20la%20lista%20mayorista%20por%20favor."
+         target="_blank" class="btn-outline">Pedir lista mayorista</a>
+    </div>
+
+    <div class="productos-grid" id="listaProductos">
+     
+      <div class="producto">
+        <img src="./img/jugobaggio.jpg" alt="Jugo Baggio 1L">
+        <h3>Jugo Baggio 1L</h3>
+        <p class="descripcion">Variedades: Durazno, Naranja, Multifruta</p>
+        <span class="precio">2200</span>
+        <button class="btn-agregar">Agregar</button>
+      </div>
+
+      <div class="producto">
+        <img src="./img/gomitas.jpg" alt="Gomitas Mogul 80g">
+        <h3>Gomitas Mogul 80g</h3>
+        <p class="descripcion">Sabores surtidos - Arcor</p>
+        <span class="precio">1800</span>
+        <button class="btn-agregar">Agregar</button>
+      </div>
+    </div>
+  </section>
+
+
+  <div id="mensajeAgregado" class="mensaje-agregado">
+    ✅ Producto agregado al carrito
+  </div>
+
+  <footer class="footer">
+    © 2025 Distribuidora Luna | Todos los derechos reservados
+  </footer>
+
+ 
+  <script src="./assets/js/script.js"></script>
+
+  <script>
+    const btnsAgregar = document.querySelectorAll(".btn-agregar");
+    const productosHTML = document.querySelectorAll(".producto");
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    btnsAgregar.forEach((btn, index) => {
+      btn.addEventListener("click", () => {
+        const producto = productosHTML[index];
+        const titulo = producto.querySelector("h3").textContent;
+        const descripcion = producto.querySelector(".descripcion").textContent;
+        const precio = parseFloat(producto.querySelector(".precio").textContent);
+        const imagen = producto.querySelector("img").getAttribute("src");
+
+        const existente = carrito.find(p => p.titulo === titulo);
+        if (existente) {
+          existente.cantidad += 1;
+        } else {
+          carrito.push({ titulo, descripcion, precio, imagen, cantidad: 1 });
+        }
+
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        actualizarContadorCarrito();
+        mostrarMensajeAgregado();
+      });
+    });
+
+    function actualizarContadorCarrito() {
+      const contador = document.getElementById("carritoCantidad");
+      const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+      contador.textContent = `(${totalItems})`;
+    }
+
+    function mostrarMensajeAgregado() {
+      const mensaje = document.getElementById("mensajeAgregado");
+      mensaje.style.display = "block";
+      setTimeout(() => {
+        mensaje.style.display = "none";
+      }, 1500);
+    }
+
+    actualizarContadorCarrito();
+  </script>
+</body>
+</html>
